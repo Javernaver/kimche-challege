@@ -1,12 +1,19 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
+import { ByContinentComponent } from './country/screens/by-continent/by-continent.component';
+import { ByLenguageComponent } from './country/screens/by-lenguage/by-lenguage.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {path: '', redirectTo: '/' , pathMatch: 'full'},
   {
-    path: '', component: HomeScreenComponent
+    path: '', component: ByContinentComponent
+  },
+  {
+    path: 'continent', component: ByContinentComponent
+  },
+  {
+    path: 'lenguage', component: ByLenguageComponent
   },
   {path: '**', redirectTo: '/'}
 ];
