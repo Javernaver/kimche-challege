@@ -1,1 +1,30 @@
-<p>by-continent works!</p>
+<div class="row container mt-4">
+    <div class="col-4"></div>
+    <div class="col">
+
+        <app-search-input></app-search-input>
+
+        <div class="alert alert-danger mt-3 animate__animated animate__fadeInDown">
+            No se encontró nada con el término
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="!allCountries; else Countries">
+    <div class="container h-100 d-flex justify-content-center">
+
+        <div class="jumbotron ">
+            <mat-progress-spinner [color]="color" [mode]="mode"></mat-progress-spinner>
+        </div>
+    </div>
+
+</ng-container>
+
+<ng-template #Countries>
+    <div class="row container mt-4">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <app-country-list [countries]="allCountries"></app-country-list>
+        </div>
+    </div>
+</ng-template>

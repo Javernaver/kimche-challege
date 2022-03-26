@@ -1,1 +1,7 @@
-<p>country-list works!</p>
+<div class="mt-4 animate__animated animate__fadeInUpBig" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="20px">
+
+    <div fxFlex="30" fxFlex.lg="30" fxFlex.sm="30" *ngFor="let country of countries">
+        <app-country-card [country]="country"></app-country-card>
+    </div>
+
+</div>

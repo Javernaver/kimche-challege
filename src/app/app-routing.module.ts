@@ -10,9 +10,6 @@ const routes: Routes = [
     path: '', component: ByContinentComponent
   },
   {
-    path: 'continent', component: ByContinentComponent
-  },
-  {
     path: 'lenguage', component: ByLenguageComponent
   },
   {path: '**', redirectTo: '/'}

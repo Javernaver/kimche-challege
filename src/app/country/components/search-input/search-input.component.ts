@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-search-input',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchInputComponent implements OnInit {
 
-  constructor() { }
+  @Output() onEnter   : EventEmitter<string> = new EventEmitter();
+  @Output() onDebounce: EventEmitter<string> = new EventEmitter();
 
-  ngOnInit(): void {
+  @Input() placeholder: string = '';
+
+  debouncer: Subject<string> = new Subject();
+
+  term: string = '';
+
+  ngOnInit() {
+    this.debouncer
+      .pipe(debounceTime(300))
+      .subscribe( value => {
+        this.onDebounce.emit( value );
+      });
   }
+
+  search() {
+    this.onEnter.emit( this.term );
+  }
+
+  keyPressed() {
+    this.debouncer.next( this.term );
+  }
+  
 
 }

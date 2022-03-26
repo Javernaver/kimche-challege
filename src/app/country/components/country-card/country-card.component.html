@@ -1,1 +1,23 @@
-<p>country-card works!</p>
+<mat-card class="example-card mt-3">
+    <mat-card-title-group>
+        <mat-card-title>{{country.name}}</mat-card-title>
+        <mat-card-subtitle>{{country.native}}</mat-card-subtitle>
+
+        <p>{{country.emoji}}</p>
+
+    </mat-card-title-group>
+    <mat-card-content>
+        <ul>
+            <li>
+                <b>Capital:</b> {{country.capital}}
+            </li>
+            <li>
+                <b>Phone Calling Code:</b> +{{country.phone}}
+            </li>
+            <li>
+                <b>Currency:</b> {{country.currency}}
+            </li>
+        </ul>
+
+    </mat-card-content>
+</mat-card>

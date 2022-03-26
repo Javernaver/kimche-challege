@@ -1,5 +1,5 @@
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 
 import { Country } from '../models/country.model';
 import { Injectable } from '@angular/core';
@@ -10,7 +10,9 @@ const allCountriesGQL = gql`
         name
         native
         capital
+        phone
         emoji
+        emojiU
         currency
         continent {
           code
@@ -54,8 +56,31 @@ export class CountryProviderService {
       //countries.push(data.countries);
       
     });
-    console.log(countries)
+    // console.log(countries)
     return of(countries)
+  }
+
+  public searchCountry(keyword: string): Observable<Country[]> {
+
+    let matches: Country[] = []
+
+    this.getAllCountries()
+    
+    .subscribe( countries => {
+      matches = countries.filter( country => {
+        country.name.includes(keyword);
+      } ) ;
+    } )
+    console.log(matches, '123213123')
+    return this.getAllCountries().pipe(
+      tap( countries => {
+        return countries.filter( country => {
+          country.name.includes(keyword);
+        } ) ;
+      }
+
+      )
+    )
   }
 
   

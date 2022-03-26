@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Country } from '../../models/country.model';
 
 @Component({
   selector: 'app-country-list',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CountryListComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  countries: Country[] | null = []
+
+  constructor(
+    
+  ) { 
+
+    
+  }
 
   ngOnInit(): void {
   }

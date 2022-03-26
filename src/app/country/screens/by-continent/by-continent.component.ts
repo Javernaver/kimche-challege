@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Country } from '../../models/country.model';
+import { CountryProviderService } from '../../providers/country-provider.service';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { ThemePalette } from '@angular/material/core';
+
 @Component({
   selector: 'app-by-continent',
   templateUrl: './by-continent.component.html',
@@ -7,9 +12,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ByContinentComponent implements OnInit {
 
-  constructor() { }
+
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'indeterminate';
+
+  
+  countries$ = this.countryP.getAllCountries();
+  allCountries : Country[] = []
+  
+  constructor(
+    private countryP: CountryProviderService
+  ) { 
+    
+    
+
+    this.countries$.subscribe( countries => {
+      
+      this.allCountries = countries
+      
+      
+    })
+  }
 
   ngOnInit(): void {
+
+   
+    console.log(this.allCountries, 'asdasdads') 
   }
 
 }
