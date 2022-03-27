@@ -20,7 +20,6 @@ export class ByContinentComponent implements OnInit {
   
   countriesContinent: Continent[] = [];
   
-  error: boolean = false;
 
   term: string = '';
 
@@ -36,27 +35,24 @@ export class ByContinentComponent implements OnInit {
 
   }
 
-
+  
   search(keyword: string) {
 
     this.term = keyword;
 
-    this.error = false;
-    
     this.countryP.searchCountryContinent(keyword).subscribe( continents => {
       
       this.countriesContinent = continents;
-      /* console.log(continents.length);
-      (continents.length == 0) ? this.error = true : this.error = false; */
+      
 
     });
     
-    
+
   }
 
   ngOnInit(): void {
 
-   
+    
    
     
   }

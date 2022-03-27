@@ -20,7 +20,6 @@ export class ByLenguageComponent implements OnInit {
   
   languageCountries: Language[] = [];
   
-  error: boolean = false;
 
   term: string = '';
 
@@ -29,7 +28,6 @@ export class ByLenguageComponent implements OnInit {
   ) { 
 
     
-
   }
 
 
@@ -37,13 +35,10 @@ export class ByLenguageComponent implements OnInit {
 
     this.term = keyword;
 
-    this.error = false;
-    
-    this.countryP.searchCountryLanguage(keyword).subscribe( continents => {
+    this.countryP.searchCountryLanguage(keyword).subscribe( lenguageCountries => {
       
-      this.languageCountries = continents;
-      /* console.log(continents.length);
-      (continents.length == 0) ? this.error = true : this.error = false; */
+      this.languageCountries = lenguageCountries;
+
 
     });
     

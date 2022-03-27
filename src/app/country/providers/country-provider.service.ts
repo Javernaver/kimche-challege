@@ -1,8 +1,11 @@
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, TypedDocumentNode, gql } from 'apollo-angular';
 import { Continent, Country, Language } from '../models/country.model';
 import { Observable, of } from 'rxjs';
 
 import { Injectable } from '@angular/core';
+
+// GQL QUERIES
+
 
 const allCountriesGQL = gql`
   query{
@@ -25,6 +28,7 @@ const allCountriesGQL = gql`
 const allContinentsGQL = gql`
   query{
     continents{
+      code
       name
       countries {
         name
@@ -65,20 +69,29 @@ export class CountryProviderService {
   ) { 
   }
 
+  // realiza las queries a GraphQL con apollo
+  public apolloQuery(query: TypedDocumentNode<unknown, unknown>) {
 
+    return this.apollo.watchQuery<any>({
+
+      query: query
+
+    }).valueChanges
+
+  }
+
+  // obtiene todos los paises
   public getAllCountries(): Observable<Country[]> {
 
     let countries: Country[] = [];
 
-    this.apollo.watchQuery<any>({
-
-      query: allCountriesGQL
-
-    }).valueChanges
+    
+    this.apolloQuery(allCountriesGQL)
     .subscribe(({data, loading}) => {
 
       console.log(loading);
       
+      // añadir los paises a lista auxiliar para retornarla como observable
       data.countries.forEach((country: Country) => {
         countries.push(country)
       });
@@ -89,7 +102,7 @@ export class CountryProviderService {
     return of(countries)
   }
 
-
+  // obtiene todos los continentes y sus paises
   public getAllContinents(): Observable<Continent[]> {
 
     let continents: Continent[] = [];
@@ -103,8 +116,9 @@ export class CountryProviderService {
 
       console.log(loading);
 
-      data.continents.forEach((continent: Continent
-        ) => {
+      data.continents.forEach((continent: Continent) => {
+
+        // añadir los continentes a lista auxiliar para retornarla como observable
         continents.push(continent)
       });
       
@@ -116,32 +130,30 @@ export class CountryProviderService {
   }
 
  
+  // busca un pais o paises agrupando los contientes
+  public searchCountryContinent(keyword: string = ''): Observable<Continent[]> {
 
-  public searchCountryContinent(keyword: string): Observable<Continent[]> {
-
+    
     let results: Continent[] = []
-
-
-    this.apollo.watchQuery<any>({
-
-      query: allContinentsGQL
-
-    }).valueChanges
+ 
+    // obtener los continentes desde graphQL
+    this.apolloQuery(allContinentsGQL)
     .subscribe(({data, loading}) => {
 
       //console.log(loading);
-
-      data.continents.forEach((continent: Continent
-        ) => {
+      // recorrer los contienentes
+      data.continents.forEach((continent: Continent) => {
 
           let countries: Country[] = [];
 
+          // recorrer los paises de los continentes para agregarlos a los resultados si coinciden
           continent.countries.forEach( country => {
               if (country.name.toLowerCase().includes(keyword.toLowerCase()) || country.native.toLowerCase().includes(keyword.toLowerCase()) ){
                 countries.push(country)
               }
           } );
 
+          // se se encontraron coincidencias crear objeto tipo continente y añadirlos a los resultados retornados com observable
           if (countries.length > 0) {
 
             let contin: Continent = {
@@ -160,7 +172,8 @@ export class CountryProviderService {
   }
 
 
-  public searchCountryLanguage(keyword: string): Observable<Language[]> {
+  // buscar pais o paises agrupando por lenguaje
+  public searchCountryLanguage(keyword: string = ''): Observable<Language[]> {
 
     if (!keyword) {
       return of([])
@@ -168,29 +181,23 @@ export class CountryProviderService {
 
     let results: Language[] = []
 
-
-    this.apollo.watchQuery<any>({
-
-      query: allLanguagesGQL
-
-    }).valueChanges
+    // obtener los lenguajes desde graphQL
+    this.apolloQuery(allLanguagesGQL)
     .subscribe(({data}) => { 
     
-      
-
+      // recorrer los lenguajes
       data.languages.forEach((language: Language) => {
 
           let countries: Country[] = [];
-
-          this.apollo.watchQuery<any>({
-
-            query: allCountriesGQL
-      
-          }).valueChanges
+          
+          // obtener los paises desde graphQL
+          this.apolloQuery(allCountriesGQL)
           .subscribe(({data}) => {
-      
+            
+            // recorrer los paises
             data.countries.forEach((country: Country) => {
-
+              
+              // recorrer los lenguajes de cada pais buscando coincidencias de el lenguaje actual y el pais buscado para agregar a lista de paises
               country.languages.forEach( lang => {
                     if (lang.name == language.name && (country.name.toLowerCase().includes(keyword.toLowerCase()) || country.native.toLowerCase().includes(keyword.toLowerCase()) )){
                       countries.push(country)
@@ -200,6 +207,7 @@ export class CountryProviderService {
                 
             });
 
+            // si se encontraron paises coincidentes crear objeto de lenguaje modificado con el listado de todos los paises coincidentes
             if (countries.length > 0) {
 
               let langu: Language = {
@@ -218,6 +226,7 @@ export class CountryProviderService {
       
     });
     
+    // retornar obsevable con los lenguajes y listado de paises coincidentes que hablen ese lenguaje
     return of(results)
   }
 
