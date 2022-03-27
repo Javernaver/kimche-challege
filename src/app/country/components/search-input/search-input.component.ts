@@ -8,16 +8,20 @@ import { Subject, debounceTime } from 'rxjs';
 })
 export class SearchInputComponent implements OnInit {
 
-  @Output() onEnter   : EventEmitter<string> = new EventEmitter();
-  @Output() onDebounce: EventEmitter<string> = new EventEmitter();
+  @Output() 
+  onEnter: EventEmitter<string> = new EventEmitter();
+  
+  @Output()
+  onDebounce: EventEmitter<string> = new EventEmitter();
 
-  @Input() placeholder: string = '';
+  @Input()
+  placeholder: string = 'Buscar...';
 
   debouncer: Subject<string> = new Subject();
 
   term: string = '';
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.debouncer
       .pipe(debounceTime(300))
       .subscribe( value => {

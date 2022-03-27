@@ -7,23 +7,23 @@ export interface Country {
     continent: Continent
     capital: string
     currency: string
-    languages: [Language]
+    languages: Language[]
     emoji: string
     emojiU: string
-    states: [State]
+    states: State[]
 }
   
 export interface Continent {
     code: number
     name: string
-    countries: [Country]
+    countries: Country[]
 }
   
 export interface Language {
     code: number
     name: string
     native: string
-    rtl: boolean
+    countries: Country[]
 }
   
 export interface State {

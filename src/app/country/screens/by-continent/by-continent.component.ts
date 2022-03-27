@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Continent, Country } from '../../models/country.model';
 
-import { Country } from '../../models/country.model';
 import { CountryProviderService } from '../../providers/country-provider.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ThemePalette } from '@angular/material/core';
@@ -17,27 +17,48 @@ export class ByContinentComponent implements OnInit {
   mode: ProgressSpinnerMode = 'indeterminate';
 
   
-  countries$ = this.countryP.getAllCountries();
-  allCountries : Country[] = []
   
+  countriesContinent: Continent[] = [];
+  
+  error: boolean = false;
+
+  term: string = '';
+
   constructor(
     private countryP: CountryProviderService
   ) { 
-    
-    
 
-    this.countries$.subscribe( countries => {
+    this.countryP.searchCountryContinent(this.term).subscribe( continent => {
       
-      this.allCountries = countries
-      
-      
+      this.countriesContinent = continent;
+
     })
+
+  }
+
+
+  search(keyword: string) {
+
+    this.term = keyword;
+
+    this.error = false;
+    
+    this.countryP.searchCountryContinent(keyword).subscribe( continents => {
+      
+      this.countriesContinent = continents;
+      /* console.log(continents.length);
+      (continents.length == 0) ? this.error = true : this.error = false; */
+
+    });
+    
+    
   }
 
   ngOnInit(): void {
 
    
-    console.log(this.allCountries, 'asdasdads') 
+   
+    
   }
 
 }

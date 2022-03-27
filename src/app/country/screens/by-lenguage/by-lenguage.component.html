@@ -1,1 +1,43 @@
-<p>by-lenguage works!</p>
+<div class="row container mt-4">
+    <div class="col-3"></div>
+    <div class="col-9">
+
+        <app-search-input (onEnter)="search( $event )" (onDebounce)="search( $event )" placeholder="Search group by language..."></app-search-input>
+
+        <div *ngIf="error" class="alert alert-danger mt-3 animate__animated animate__fadeInDown">
+            No se encontró nada realacionado con: {{term}}
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="languageCountries.length == 0 && !error; else Countries">
+    <div class="container h-100 d-flex justify-content-center">
+
+        <div class="jumbotron ">
+            <mat-progress-spinner [color]="color" [mode]="mode"></mat-progress-spinner>
+        </div>
+    </div>
+
+</ng-container>
+
+<ng-template #Countries>
+    <div class="row container mt-4">
+        <div class="col-3"></div>
+        <div class="col-9">
+
+
+            <ng-container *ngFor="let languageCountry of languageCountries">
+
+                <ng-container *ngIf="languageCountry.countries.length > 0">
+                    <h1>{{languageCountry.name}} | {{languageCountry.native}}</h1>
+                    <hr>
+                </ng-container>
+
+
+                <app-country-list [countries]="languageCountry.countries"></app-country-list>
+            </ng-container>
+
+
+        </div>
+    </div>
+</ng-template>
