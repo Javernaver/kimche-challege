@@ -1,27 +1,36 @@
-# KimcheChallenge
+# KimcheChallenge | Desafío para Software Engineers
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+* **Nombre postulante:** Javier Ignacio del Canto Montenegro
+* **Link a la app en producción:** https://kimchallenge.netlify.app/
 
-## Development server
+## Explicación ejercicio
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Consiste en un buscador de países utilizando un [grafo de paises](https://countries.trevorblades.com/). Agrupando los resultados de las busquedas por continentes o por lenguajes.
 
-## Code scaffolding
+## Consideraciones que se tomaron
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Se utilizó el framework de [Angular CLI](https://angular.io/cli) debido a mi falta de conocimientos actuales sobre otros framework como React.
 
-## Build
+* Debido a que practicamente no sabía nada de GraphQL o Apollo, no pude elaborar queries óptimos según el schema aceptado por el [grafo de paises](https://countries.trevorblades.com/), por lo que tuve que ingeniarmela con servicios 'singleton' y el rendimiento puede no ser el mejor, sobre todo el la búsqueda agrupando por lenguajes.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Estructura de la aplicación
 
-## Running unit tests
+La estructura interna de como se distibuye el código fuente se componene de la siguiente forma:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![](img/kimchallange.png)
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Pregunta abierta a responder
 
-## Further help
+"La tabla que contiene la información correspondiente a la asistencia diaria de un niño en un colegio tiene 90 millones de filas. Todas las tablas del sistema existen en la misma BDD en MySQL. La lógica del backend que actualiza la información correspondiente al pasar la asistencia tiene un tiempo de servicio p95 de 10 segundos. El equipo está interesado en bajar este tiempo para mejorar la experiencia del usuario (y porque nos gusta pensar en Kimche como un Ferrari). ¿Qué propondrías para enfrentar el problema? Esta pregunta es abierta, no hay respuestas malas. Puedes proponer arquitectura, tecnologías, diseño, etc."
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**Respuesta:** 
+
+Siendo sincero diría que actualmente no tengo la experiencia necesaria para plantearme una situación así, ya que 90 millones de filas solo en asistencias me parece excesivo, por lo que me da la impresión de que se acumulan desde hace mucho tiempo. La solución me parece que sería ir creando una nueva base de datos cada año de forma que no se acumule la información y las antiguas queden archivadas por si se necesitan. Lo otro también seria indexar las tablas para que obtener la información más rápido.
+
+Otra solución se puede dar por tecnologías que no conozco actualmente.
+
+
+## Palabras finales
+
+Este ejercicio sirvió para entender ciertos fundamentos de tecnologías que no conocía, como GraphQL y Apollo, así como reforzar mis habilidades de programación web. Siendo que hace poco terminé mis estudios universitarios, soy consciente de que recién estoy comenzando, por lo que me gustaría optar a este empleo y desarrollarme profesionalmente, aunque sea como desarrollador trainee o algo similar.
