@@ -19,6 +19,22 @@ La estructura interna de como se distibuye el código fuente se componene de la 
 
 ![](img/kimchallange.png)
 
+## Modo Desarrollo
+
+Para ejecutar el código en modo desarrollo debemos seguir los siguientes pasos:
+
+**Requisitos**:
+
+1. Tener instalado [NodeJS](https://nodejs.org/es/)
+1. Tener instalado [Angular CLI](https://angular.io/cli)
+
+**Ejecutar en la carpeta:**
+```sh
+npm install
+```
+```sh
+npm start
+```
 
 ## Pregunta abierta a responder
 
